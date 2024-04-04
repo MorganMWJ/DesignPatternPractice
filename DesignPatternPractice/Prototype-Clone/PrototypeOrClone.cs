@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Intrinsics.Arm;
+using System.Text;
 
 namespace DesignPatternPractice.Prototype_Clone;
 
@@ -34,21 +35,40 @@ internal class RoadVehicle : IDeepCloneable
 
 internal class Car : RoadVehicle
 {
-    internal string CarBrand { get; set; }
+    internal required string CarBrand { get; set; }
 
-    internal CarOwner Owner { get; set; }
+    internal required CarOwner Owner { get; set; }
 
     public new IDeepCloneable DeepClone()
     {
-        var roadCar = (Car) base.DeepClone();
-        roadCar.CarBrand = this.CarBrand;
-        roadCar.Owner = new CarOwner
+        var roadCar = new Car
         {
-            FirstName = this.Owner.FirstName,
-            LastName = this.Owner.LastName
+            Wheels = this.Wheels,
+            Speed = this.Speed,
+            Colour = this.Colour,
+            CarBrand = this.CarBrand,
+            Owner = new CarOwner
+            {
+                FirstName = this.Owner.FirstName,
+                LastName = this.Owner.LastName
+            }
         };
+       
 
         return roadCar;
+    }
+
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+
+        sb.AppendLine($"{nameof(Wheels)}: {Wheels}");
+        sb.AppendLine($"{nameof(Speed)}: {Speed}");
+        sb.AppendLine($"{nameof(CarBrand)}: {CarBrand}");
+        sb.AppendLine($"{nameof(Colour)}: {Colour}");
+        sb.AppendLine($"{nameof(Owner)}: {Owner.FirstName} {Owner.LastName}");
+
+        return sb.ToString();
     }
 }
 
