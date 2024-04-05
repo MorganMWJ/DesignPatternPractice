@@ -1,8 +1,11 @@
 ﻿using DesignPatternPractice.Bridge;
 using DesignPatternPractice.Decorator;
 using DesignPatternPractice.Facade;
-using DesignPatternPractice.Prototype_Clone;
+using DesignPatternPractice.Iterator;
 using DesignPatternPractice.ProxyDesignPattern;
+using DesignPatternPractice.Strategy;
+using MorganMWJ.DesignPatternPracitce.Prototype_Clone;
+using MorganMWJ.HelpersPkg;
 
 namespace DesignPatternPractice
 {
@@ -31,6 +34,10 @@ namespace DesignPatternPractice
             Console.WriteLine("----------------------");
 
             CloneUsage();
+
+            Console.WriteLine("----------------------");
+
+            StrategyUsage();
         }
 
         static void DecoratorUsage()
@@ -93,12 +100,12 @@ namespace DesignPatternPractice
                 Owner = new CarOwner { FirstName = "Morgan", LastName = "Jones"}
             };
 
-            Console.WriteLine($"First car (memory address: {Methods.GetMemoryAddress(car)})");
+            Console.WriteLine($"First car (memory address: {StaticHelpers.GetMemoryAddress(car)})");
             Console.WriteLine(car);
 
             var carClone = car.DeepClone();
 
-            Console.WriteLine($"DeepClone of car (memory address: {Methods.GetMemoryAddress(carClone)})");
+            Console.WriteLine($"DeepClone of car (memory address: {StaticHelpers.GetMemoryAddress(carClone)})");
             Console.WriteLine(carClone);
 
 
@@ -118,6 +125,24 @@ namespace DesignPatternPractice
             {
                 Console.WriteLine(c);
             }
-        }    
+        }
+        
+        static void StrategyUsage()
+        {
+            var arithmeticContext = new Context();
+
+            arithmeticContext.Strategy = new MultiplyStrategy();
+
+            Console.WriteLine($"Data {arithmeticContext.FrequencyData} and {arithmeticContext.SpeedData} returns {arithmeticContext.CombineData()} when using {nameof(MultiplyStrategy)}");
+
+            arithmeticContext.Strategy = new AddStrategy();
+
+            Console.WriteLine($"Data {arithmeticContext.FrequencyData} and {arithmeticContext.SpeedData} returns {arithmeticContext.CombineData()} when using {nameof(AddStrategy)}");
+
+            arithmeticContext.Strategy = new SubtractStrategy();
+
+            Console.WriteLine($"Data {arithmeticContext.FrequencyData} and {arithmeticContext.SpeedData} returns {arithmeticContext.CombineData()} when using {nameof(SubtractStrategy)}");
+
+        }
     }
 }

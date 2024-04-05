@@ -1,7 +1,7 @@
-﻿using DesignPatternPractice.Prototype_Clone;
+﻿using MorganMWJ.DesignPatternPracitce.Prototype_Clone;
 using System.Collections;
 
-namespace DesignPatternPractice
+namespace DesignPatternPractice.Iterator
 {
     // Collection of Car objects. This class
     // implements IEnumerable so that it can be used
@@ -41,10 +41,12 @@ namespace DesignPatternPractice
 
         public object Current => _cars[position];
 
+        public bool HasMore => position < _cars.Length;
+
         public bool MoveNext()
         {
             position++;
-            return (position < _cars.Length);
+            return HasMore;
         }
 
         public void Reset()

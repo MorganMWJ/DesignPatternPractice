@@ -8,4 +8,12 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Memento\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MorganMWJ.Helpers" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>

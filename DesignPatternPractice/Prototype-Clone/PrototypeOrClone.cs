@@ -1,7 +1,6 @@
-﻿using System.Runtime.Intrinsics.Arm;
-using System.Text;
+﻿using System.Text;
 
-namespace DesignPatternPractice.Prototype_Clone;
+namespace MorganMWJ.DesignPatternPracitce.Prototype_Clone;
 
 /// <summary>
 /// This pattern is how to create an exact copy of an object. (i.e cloneable)
