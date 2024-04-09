@@ -2,6 +2,7 @@
 using DesignPatternPractice.Decorator;
 using DesignPatternPractice.Facade;
 using DesignPatternPractice.Iterator;
+using DesignPatternPractice.Memento;
 using DesignPatternPractice.ProxyDesignPattern;
 using DesignPatternPractice.Strategy;
 using MorganMWJ.DesignPatternPracitce.Prototype_Clone;
@@ -38,6 +39,10 @@ namespace DesignPatternPractice
             Console.WriteLine("----------------------");
 
             StrategyUsage();
+
+            Console.WriteLine("----------------------");
+
+            MementoUsage();
         }
 
         static void DecoratorUsage()
@@ -78,6 +83,10 @@ namespace DesignPatternPractice
             proxy.Operation("test param");
         }
 
+        /// <summary>
+        /// Very similar to stragety just a dependency of many types (ploymorph)
+        /// Although structural because dependency goes into constructor and is only settable through that. cannot dynamically change implementation (unlike strategy)
+        /// </summary>
         static void BridgeUsage()
         {
             var bridgeToNicePerson = new AbstractionSideOfBridge(new NiceDependencySideImplementation());
@@ -127,6 +136,10 @@ namespace DesignPatternPractice
             }
         }
         
+        /// <summary>
+        /// Very similar to bridge just a dependency of many types (ploymorph)
+        /// Although behavioural because settable at runtime. less coupling?
+        /// </summary>
         static void StrategyUsage()
         {
             var arithmeticContext = new Context();
@@ -143,6 +156,29 @@ namespace DesignPatternPractice
 
             Console.WriteLine($"Data {arithmeticContext.FrequencyData} and {arithmeticContext.SpeedData} returns {arithmeticContext.CombineData()} when using {nameof(SubtractStrategy)}");
 
+        }
+
+
+        static void MementoUsage()
+        {
+            Console.WriteLine("Initial State:");
+            var gameClient = new GameClient();
+            Console.WriteLine(gameClient);
+
+            Console.WriteLine("Level Up 3 times:");
+            gameClient.LevelUpAndSave();
+            Console.WriteLine(gameClient);
+
+            gameClient.LevelUpAndSave();
+            Console.WriteLine(gameClient);
+
+            gameClient.LevelUpAndSave();
+            Console.WriteLine(gameClient);
+
+
+            Console.WriteLine("Reset player state/saves by 2:");
+            gameClient.UndoPlayerSave(2);
+            Console.WriteLine(gameClient);
         }
     }
 }
