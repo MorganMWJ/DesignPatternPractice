@@ -5,6 +5,7 @@ using DesignPatternPractice.Iterator;
 using DesignPatternPractice.Memento;
 using DesignPatternPractice.ProxyDesignPattern;
 using DesignPatternPractice.Strategy;
+using DesignPatternPractice.TreeIterator;
 using MorganMWJ.DesignPatternPracitce.Prototype_Clone;
 using MorganMWJ.HelpersPkg;
 
@@ -43,6 +44,10 @@ namespace DesignPatternPractice
             Console.WriteLine("----------------------");
 
             MementoUsage();
+
+            Console.WriteLine("----------------------");
+
+            TreeNodeUsage();
         }
 
         static void DecoratorUsage()
@@ -179,6 +184,37 @@ namespace DesignPatternPractice
             Console.WriteLine("Reset player state/saves by 2:");
             gameClient.UndoPlayerSave(2);
             Console.WriteLine(gameClient);
+        }
+
+        static void TreeNodeUsage()
+        {
+            TreeNode<string> root = new TreeNode<string>("Root");
+            TreeNode<string> child1 = new TreeNode<string>("Child 1", root);
+            TreeNode<string> child2 = new TreeNode<string>("Child 2", root);
+            TreeNode<string> leaf1 = new TreeNode<string>("Leaf 1", child1);
+            TreeNode<string> leaf2 = new TreeNode<string>("Leaf 2", child1);
+            TreeNode<string> leaf3 = new TreeNode<string>("Leaf 3", child2);
+
+            // Build the tree
+            root.AddChild(child1);
+            root.AddChild(child2);
+            child1.AddChild(leaf1);
+            child1.AddChild(leaf2);
+            child2.AddChild(leaf3);
+
+            // Iterate using depth-first traversal
+            foreach (var node in root)
+            {
+                Console.WriteLine(node.Value);
+            }
+
+            root.Search = SearchType.BreadthFirst; // stupid using enum lol
+
+            // Iterate using breadth-first traversal
+            foreach (var node in root)
+            {
+                Console.WriteLine(node.Value);
+            }
         }
     }
 }
