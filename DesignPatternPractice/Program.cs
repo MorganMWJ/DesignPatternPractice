@@ -208,7 +208,8 @@ namespace DesignPatternPractice
                 Console.WriteLine(node.Value);
             }
 
-            root.Search = SearchType.BreadthFirst; // stupid using enum lol
+            // Strategy Design Pattern to set breadth first search iteration
+            root.IterationStrategy = new BreadthFirstStrategy<string>();
 
             // Iterate using breadth-first traversal
             foreach (var node in root)
