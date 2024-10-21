@@ -1,4 +1,5 @@
 ﻿using DesignPatternPractice.Bridge;
+using DesignPatternPractice.Builder;
 using DesignPatternPractice.Decorator;
 using DesignPatternPractice.Facade;
 using DesignPatternPractice.Iterator;
@@ -48,6 +49,10 @@ namespace DesignPatternPractice
             Console.WriteLine("----------------------");
 
             TreeNodeUsage();
+
+            Console.WriteLine("----------------------");
+
+            BuilderUsage();
         }
 
         static void DecoratorUsage()
@@ -216,6 +221,36 @@ namespace DesignPatternPractice
             {
                 Console.WriteLine(node.Value);
             }
+        }
+
+        static void BuilderUsage()
+        {
+            var director = new Director(new XmlPaymentMessageBuilder());
+
+            var bi = new BasicInfo
+            {
+                Creditor = "me",
+                Debtor = "dude",
+                Date = DateTime.Now,
+                Currency = "GBP",
+                Amount = 23.09
+            };
+
+            var ai = new AuxillaryInfo
+            {
+                Notes = "Thanks mate",
+                Address = "23 Zoo Lane, NP55 8UI"
+            };
+
+            Console.WriteLine("Using XML builder");
+            Console.WriteLine(director.ConstructBasicPaymentMessage(bi));
+            Console.WriteLine(director.ConstructAdvancedPaymentMessage(bi, ai));
+
+            director.PaymentMessageBuilder = new YamlPaymentMessageBuilder();
+
+            Console.WriteLine("Using YAML builder");
+            Console.WriteLine(director.ConstructBasicPaymentMessage(bi));
+            Console.WriteLine(director.ConstructAdvancedPaymentMessage(bi, ai));
         }
     }
 }
