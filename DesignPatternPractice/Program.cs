@@ -1,5 +1,6 @@
 ﻿using DesignPatternPractice.Bridge;
 using DesignPatternPractice.Builder;
+using DesignPatternPractice.ChainOfResponsibility;
 using DesignPatternPractice.Decorator;
 using DesignPatternPractice.Facade;
 using DesignPatternPractice.Iterator;
@@ -53,6 +54,10 @@ namespace DesignPatternPractice
             Console.WriteLine("----------------------");
 
             BuilderUsage();
+
+            Console.WriteLine("----------------------");
+
+            ChainOfResponsibilityUsage();
         }
 
         static void DecoratorUsage()
@@ -251,6 +256,25 @@ namespace DesignPatternPractice
             Console.WriteLine("Using YAML builder");
             Console.WriteLine(director.ConstructBasicPaymentMessage(bi));
             Console.WriteLine(director.ConstructAdvancedPaymentMessage(bi, ai));
+        }
+
+        static void ChainOfResponsibilityUsage()
+        {
+            var handler = new OrderHandlerFactory().CreateOrderCOR();
+
+            var request = new OrderRequest(new Guid(), "Peace Lily", 45.90m, 2040, "Good luck");
+
+            // Cannot use Object Inititialization syntax without a parameterless constructor
+            //var request2 = new OrderRequest
+            //{
+            //    Id = Guid.NewGuid(),
+            //    Item = "Peace Lily",
+            //    Price = 45.90m,
+            //    Quantity = 2040,
+            //    Notes = "Good luck"
+            //};
+
+            handler.Handle(request);
         }
     }
 }
