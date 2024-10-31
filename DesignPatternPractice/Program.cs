@@ -5,11 +5,13 @@ using DesignPatternPractice.Decorator;
 using DesignPatternPractice.Facade;
 using DesignPatternPractice.Iterator;
 using DesignPatternPractice.Memento;
+using DesignPatternPractice.Observer;
 using DesignPatternPractice.ProxyDesignPattern;
 using DesignPatternPractice.Strategy;
 using DesignPatternPractice.TreeIterator;
 using MorganMWJ.DesignPatternPracitce.Prototype_Clone;
 using MorganMWJ.HelpersPkg;
+using System.Reflection.Metadata.Ecma335;
 
 namespace DesignPatternPractice
 {
@@ -58,6 +60,10 @@ namespace DesignPatternPractice
             Console.WriteLine("----------------------");
 
             ChainOfResponsibilityUsage();
+
+            Console.WriteLine("----------------------");
+
+            ObserverUsage(); //pub/sub
         }
 
         static void DecoratorUsage()
@@ -275,6 +281,25 @@ namespace DesignPatternPractice
             //};
 
             handler.Handle(request);
+        }
+
+        static void ObserverUsage()
+        {
+            var me = new Person("Morgan", 28);
+
+            var personPub = new PersonPublisher();
+
+            var payrollSub = new PayrollSubscriber();
+            var emailSub = new EmailSubscriber();
+
+            personPub.Subscribe(payrollSub);
+            personPub.Subscribe(emailSub);
+
+            // Actions on the person manager will notify email/payroll 
+            // and other subscribers
+            personPub.OnBoard(new List<Person> { me });
+            personPub.Birthday(me);
+
         }
     }
 }
